@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<meta name="description" content="Suivi photo de chantier avec annotations et export PDF, 100% hors-ligne.">
+<title>Reportage Chantier</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Chantier">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ====== ECRAN 1 : DEMARRAGE ====== -->
+<section id="screen-start" class="screen active">
+  <div class="screen-inner center-vertical">
+    <h1 class="app-title">🚧 Reportage Chantier</h1>
+    <p class="app-subtitle">Suivi photo hors-ligne</p>
+
+    <label class="field-label" for="input-chantier-name">Nom du chantier</label>
+    <input id="input-chantier-name" class="text-input" type="text" placeholder="ex : Résidence Les Tilleuls" autocomplete="off">
+
+    <button id="btn-start" class="btn btn-primary btn-xl" disabled>Commencer le reportage</button>
+  </div>
+</section>
+
+<!-- ====== ECRAN 2 : CAPTURE ====== -->
+<section id="screen-capture" class="screen">
+  <header class="app-header">
+    <div class="app-header-title" id="capture-chantier-label">Chantier</div>
+    <div class="app-header-sub"><span id="capture-count">0</span> photo(s) dans le rapport</div>
+  </header>
+
+  <div class="screen-inner">
+    <input id="input-camera" type="file" accept="image/*" capture="environment" hidden>
+
+    <div id="capture-empty" class="capture-empty">
+      <button id="btn-take-photo" class="btn btn-primary btn-xl btn-photo">
+        📷 Prendre une photo
+      </button>
+    </div>
+
+    <div id="capture-preview" class="capture-preview hidden">
+      <img id="capture-preview-img" alt="Photo capturée">
+      <label class="field-label" for="input-repere">Repère (ex : Pignon Nord)</label>
+      <input id="input-repere" class="text-input" type="text" placeholder="Pignon Nord" autocomplete="off">
+      <div class="btn-row">
+        <button id="btn-retake" class="btn btn-secondary">↺ Reprendre</button>
+        <button id="btn-goto-annotate" class="btn btn-primary">Annoter →</button>
+      </div>
+    </div>
+
+    <div id="capture-actions" class="capture-actions">
+      <button id="btn-goto-recap" class="btn btn-outline btn-xl" disabled>Voir le récapitulatif (<span id="capture-count-2">0</span>)</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ECRAN 3 : ANNOTATION ====== -->
+<section id="screen-annotate" class="screen">
+  <header class="app-header">
+    <div class="app-header-title">Annoter la photo</div>
+  </header>
+
+  <div class="screen-inner annotate-inner">
+    <div class="canvas-wrap">
+      <canvas id="annotate-canvas"></canvas>
+    </div>
+
+    <div class="toolbar">
+      <button id="tool-arrow" class="tool-btn active" data-tool="arrow" title="Flèche">➜ Flèche</button>
+      <button id="tool-text" class="tool-btn" data-tool="text" title="Texte">🅣 Texte</button>
+      <button id="btn-undo" class="tool-btn" title="Annuler">↶ Annuler</button>
+      <button id="btn-clear" class="tool-btn" title="Effacer tout">🗑 Effacer</button>
+    </div>
+
+    <button id="btn-add-to-report" class="btn btn-primary btn-xl">✓ Ajouter au rapport</button>
+  </div>
+</section>
+
+<!-- ====== ECRAN 4 : RECAPITULATIF ====== -->
+<section id="screen-recap" class="screen">
+  <header class="app-header">
+    <div class="app-header-title">Récapitulatif</div>
+    <div class="app-header-sub"><span id="recap-count">0</span> photo(s)</div>
+  </header>
+
+  <div class="screen-inner">
+    <div id="recap-list" class="recap-list"></div>
+
+    <div id="recap-empty-msg" class="recap-empty-msg hidden">Aucune photo pour le moment.</div>
+
+    <div class="btn-row btn-row-col">
+      <button id="btn-add-more" class="btn btn-secondary btn-xl">+ Ajouter une photo</button>
+      <button id="btn-generate-pdf" class="btn btn-primary btn-xl" disabled>📄 Générer le PDF</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ECRAN 5 : EXPORT ====== -->
+<section id="screen-export" class="screen">
+  <header class="app-header">
+    <div class="app-header-title">PDF généré</div>
+  </header>
+
+  <div class="screen-inner center-vertical">
+    <div id="export-status" class="export-status">📄</div>
+    <p id="export-message" class="export-message">Génération du PDF en cours…</p>
+
+    <div id="export-actions" class="btn-row btn-row-col hidden">
+      <button id="btn-share" class="btn btn-primary btn-xl hidden">📤 Partager (WhatsApp…)</button>
+      <button id="btn-download" class="btn btn-secondary btn-xl">⬇️ Télécharger / Imprimer</button>
+      <button id="btn-back-to-recap" class="btn btn-outline btn-xl">← Retour au récapitulatif</button>
+    </div>
+  </div>
+</section>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="vendor/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
