@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>Bon de livraison — Chantier</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="style.css">
+<style>
+  textarea.text-input { min-height: 140px; resize: vertical; line-height: 1.4; }
+  input[type="date"].text-input { min-height: 56px; color-scheme: dark; }
+  .day-hint { font-size: 0.85rem; color: var(--yellow); margin-top: -10px; min-height: 1em; }
+  .back-link { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; }
+  body { user-select: auto; }
+</style>
+</head>
+<body>
+
+<section id="screen-form" class="screen active">
+  <header class="app-header">
+    <a href="index.html" class="back-link">← Reportage photo</a>
+    <div class="app-header-title">📦 Bon de livraison</div>
+  </header>
+
+  <div class="screen-inner">
+    <label class="field-label" for="f-demandeur">Demandé par</label>
+    <input id="f-demandeur" class="text-input" type="text" list="dl-demandeur" placeholder="ex : Sylvanise" autocomplete="off">
+
+    <label class="field-label" for="f-date-dde">Date de la demande</label>
+    <input id="f-date-dde" class="text-input" type="date">
+
+    <label class="field-label" for="f-ou">Où (chantier / lieu)</label>
+    <input id="f-ou" class="text-input" type="text" list="dl-ou" placeholder="ex : Centre culturel MARCE" autocomplete="off">
+
+    <label class="field-label" for="f-quoi">Quoi (une ligne par article)</label>
+    <textarea id="f-quoi" class="text-input" placeholder="2 chevilles Ø 12 x 120&#10;70 lames de parquet"></textarea>
+
+    <label class="field-label" for="f-quand">Quand (date de livraison)</label>
+    <input id="f-quand" class="text-input" type="date">
+    <div id="quand-hint" class="day-hint"></div>
+
+    <label class="field-label" for="f-livreur">Livré par</label>
+    <input id="f-livreur" class="text-input" type="text" list="dl-livreur" placeholder="ex : Cinéus" autocomplete="off">
+
+    <datalist id="dl-demandeur"></datalist>
+    <datalist id="dl-ou"></datalist>
+    <datalist id="dl-livreur"></datalist>
+
+    <div class="btn-row btn-row-col">
+      <button id="btn-pdf" class="btn btn-primary btn-xl">📄 Générer le PDF</button>
+      <button id="btn-reset" class="btn btn-outline btn-xl">Nouveau bon (vider)</button>
+    </div>
+  </div>
+</section>
+
+<section id="screen-export" class="screen">
+  <header class="app-header">
+    <div class="app-header-title">Bon de livraison prêt</div>
+  </header>
+  <div class="screen-inner center-vertical">
+    <div class="export-status">✅</div>
+    <p id="export-message" class="export-message"></p>
+    <div class="btn-row btn-row-col">
+      <button id="btn-share" class="btn btn-primary btn-xl hidden">📤 Partager (WhatsApp, mail…)</button>
+      <button id="btn-download" class="btn btn-secondary btn-xl">⬇️ Télécharger / Imprimer</button>
+      <button id="btn-back" class="btn btn-outline btn-xl">← Retour au formulaire</button>
+    </div>
+  </div>
+</section>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="vendor/jspdf.umd.min.js"></script>
+<script src="livraison.js"></script>
+</body>
+</html>
