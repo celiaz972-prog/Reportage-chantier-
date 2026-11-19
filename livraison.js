@@ -128,7 +128,7 @@
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(24);
     doc.setTextColor(17, 17, 17);
-    doc.text('LIVRAISON', pageW / 2, 30, { align: 'center' });
+    doc.text('FICHE DE BESOINS', pageW / 2, 30, { align: 'center' });
     doc.setFillColor(245, 196, 0);
     doc.rect(pageW / 2 - 30, 34, 60, 1.5, 'F');
 
@@ -193,7 +193,7 @@
       const doc = buildPdf(data);
       pdfBlob = doc.output('blob');
       const date = (data.quand || todayIso()).replace(/-/g, '');
-      pdfName = `livraison-${slug(data.ou) || 'chantier'}-${date}.pdf`;
+      pdfName = `fiche-besoins-${slug(data.ou) || 'chantier'}-${date}.pdf`;
       saveHistory(data);
 
       $('export-message').textContent = `${pdfName}`;
@@ -228,7 +228,7 @@
     if (!pdfBlob) return;
     try {
       const file = new File([pdfBlob], pdfName, { type: 'application/pdf' });
-      await navigator.share({ files: [file], title: 'Bon de livraison', text: readForm().ou });
+      await navigator.share({ files: [file], title: 'Fiche de besoins', text: readForm().ou });
     } catch (err) {
       if (err && err.name !== 'AbortError') toast('Partage impossible sur cet appareil');
     }
