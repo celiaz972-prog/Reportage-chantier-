@@ -1,9 +1,11 @@
-const CACHE_NAME = 'reportage-chantier-v1';
+const CACHE_NAME = 'reportage-chantier-v2';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
+  './livraison.html',
+  './livraison.js',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
