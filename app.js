@@ -570,6 +570,27 @@
     showScreen('screen-recap');
   });
 
+  // ---------- Retour au menu principal ----------
+  function goHome() {
+    const n = state.photos.length;
+    if (n > 0 && !confirm(`Quitter le reportage ?\n${n} photo(s) non exportée(s) seront perdues.`)) return;
+    closeActiveTextInput(false);
+    state.photos = [];
+    state.chantierName = '';
+    capture.rawDataUrl = null;
+    pendingPdfBlob = null;
+    inputChantierName.value = '';
+    btnStart.disabled = true;
+    showScreen('screen-start');
+  }
+
+  document.querySelectorAll('.js-home').forEach(b => b.addEventListener('click', goHome));
+
+  $('btn-annotate-back').addEventListener('click', () => {
+    closeActiveTextInput(false);
+    showScreen('screen-capture');
+  });
+
   // ---------- Service worker ----------
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
